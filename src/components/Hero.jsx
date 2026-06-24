@@ -181,7 +181,7 @@ export default function Hero({ onOpenEnquiry, onOpenCourseDetail }) {
                       borderRadius: '6px',
                       fontSize: '0.95rem',
                       fontWeight: '800',
-                      color: b === 'OSHA' ? 'var(--accent)' : '#FFFFFF',
+                      color:'#FFFFFF',
                       letterSpacing: '1px',
                       cursor: 'pointer',
                       transition: 'all 0.25s ease',
@@ -197,7 +197,7 @@ export default function Hero({ onOpenEnquiry, onOpenCourseDetail }) {
                     onMouseLeave={e => {
                       e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.06)';
                       e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)';
-                      e.currentTarget.style.color = b === 'OSHA' ? 'var(--accent)' : '#FFFFFF';
+                      e.currentTarget.style.color = '#FFFFFF';
                       e.currentTarget.style.transform = 'translateY(0)';
                       e.currentTarget.style.boxShadow = 'none';
                     }}
