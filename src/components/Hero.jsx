@@ -28,7 +28,15 @@ function useCounter(target, duration = 1500) {
   return count;
 }
 
-export default function Hero({ onOpenEnquiry }) {
+// Badge label → course slug mapping
+const BADGE_SLUGS = {
+  'IOSH': 'iosh',
+  'OSHA': 'osha',
+  'OTHM': 'othm',
+  'ISO IRCA': 'iso',
+};
+
+export default function Hero({ onOpenEnquiry, onOpenCourseDetail }) {
   const studentsCount = useCounter(10500);
   const placementsCount = useCounter(100);
   const partnersCount = useCounter(15);
@@ -160,24 +168,45 @@ export default function Hero({ onOpenEnquiry }) {
               <span style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '1.5px', color: '#A0AEC0', display: 'block', marginBottom: '15px' }}>
                 Accredited Course Partners & Frameworks:
               </span>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '30px', alignItems: 'center', opacity: '0.85' }} className="partner-badges">
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }} className="partner-badges">
                 {['IOSH', 'OSHA', 'OTHM', 'ISO IRCA'].map((b) => (
-                  <div
+                  <button
                     key={b}
+                    onClick={() => onOpenCourseDetail && onOpenCourseDetail(BADGE_SLUGS[b])}
+                    title={`View ${b} course details`}
                     style={{
                       padding: '8px 18px',
                       backgroundColor: 'rgba(255,255,255,0.06)',
-                      border: '1px solid rgba(255,255,255,0.1)',
+                      border: '1px solid rgba(255,255,255,0.15)',
                       borderRadius: '6px',
                       fontSize: '0.95rem',
                       fontWeight: '800',
                       color: b === 'OSHA' ? 'var(--accent)' : '#FFFFFF',
-                      letterSpacing: '1px'
+                      letterSpacing: '1px',
+                      cursor: 'pointer',
+                      transition: 'all 0.25s ease',
+                      fontFamily: 'inherit',
+                    }}
+                    onMouseEnter={e => {
+                      e.currentTarget.style.backgroundColor = 'rgba(255,122,0,0.18)';
+                      e.currentTarget.style.borderColor = 'rgba(255,122,0,0.5)';
+                      e.currentTarget.style.color = '#FF7A00';
+                      e.currentTarget.style.transform = 'translateY(-2px)';
+                      e.currentTarget.style.boxShadow = '0 6px 18px rgba(255,122,0,0.25)';
+                    }}
+                    onMouseLeave={e => {
+                      e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.06)';
+                      e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)';
+                      e.currentTarget.style.color = b === 'OSHA' ? 'var(--accent)' : '#FFFFFF';
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = 'none';
                     }}
                   >
                     {b}
-                  </div>
+                  </button>
                 ))}
+              </div>
+
               </div>
             </div>
           </div>
@@ -272,7 +301,7 @@ export default function Hero({ onOpenEnquiry }) {
         {/* </div> */}
 
         {/* </div> */}
-      </div>
+     
 
       {/* Hero Responsive CSS */}
       <style>{`

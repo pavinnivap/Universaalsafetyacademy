@@ -118,7 +118,6 @@ export default function FAQ() {
               <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.82rem', opacity: 0.9 }}>
                 <li>✔️ Free resume assessment check</li>
                 <li>✔️ Detailed safety syllabus guides</li>
-                <li>✔️ Middle East visa guidelines support</li>
               </ul>
             </div>
 

@@ -18,12 +18,14 @@ import Footer from './components/Footer';
 import EnquiryModal from './components/EnquiryModal';
 import LegalModal from './components/LegalModal';
 import FloatingWhatsApp from './components/FloatingWhatsApp';
+import CourseDetailPage from './components/CourseDetailPage';
 import { injectJSONLD, updateMetadata } from './seo';
 
 export default function App() {
   const [isEnquiryOpen, setIsEnquiryOpen] = useState(false);
   const [selectedCourseId, setSelectedCourseId] = useState(null);
   const [legalModal, setLegalModal] = useState({ isOpen: false, type: 'privacy' });
+  const [activeCourseFamily, setActiveCourseFamily] = useState(null); // 'iosh'|'osha'|'othm'|'iso'|null
 
   // Clean up any previously saved theme settings on mount
   useEffect(() => {
@@ -56,6 +58,16 @@ export default function App() {
     setLegalModal(prev => ({ ...prev, isOpen: false }));
   };
 
+  const handleOpenCourseDetail = (slug) => {
+    setActiveCourseFamily(slug);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleCloseCourseDetail = () => {
+    setActiveCourseFamily(null);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <>
       {/* Premium Loading Screen */}
@@ -67,34 +79,48 @@ export default function App() {
       />
 
       <main>
-        {/* Page Sections */}
-        <Hero onOpenEnquiry={handleOpenEnquiry} />
-        
-        <About onOpenEnquiry={handleOpenEnquiry} />
-        
-        <WhyChooseUs />
-        
-        <div id="certifications">
-          <LearningOutcomes />
-        </div>
-        
-        <Benefits />
-        
-        <WhoShouldEnroll />
-        
-        <Courses onOpenEnquiry={handleOpenEnquiry} />
-        
-        <OnlineFeatures />
-        
-        <Placements />
-        
-        {/* <Testimonials /> */}
-        
-        <Blog />
-        
-        <FAQ />
-        
-        <Contact />
+        {activeCourseFamily ? (
+          /* ── Course Detail Page ───────────────────── */
+          <CourseDetailPage
+            slug={activeCourseFamily}
+            onBack={handleCloseCourseDetail}
+            onOpenEnquiry={handleOpenEnquiry}
+          />
+        ) : (
+          /* ── Homepage Sections ────────────────────── */
+          <>
+            <Hero
+              onOpenEnquiry={handleOpenEnquiry}
+              onOpenCourseDetail={handleOpenCourseDetail}
+            />
+
+            <About onOpenEnquiry={handleOpenEnquiry} />
+
+            <WhyChooseUs />
+
+            <div id="certifications">
+              <LearningOutcomes />
+            </div>
+
+            <Benefits />
+
+            <WhoShouldEnroll />
+
+            <Courses onOpenEnquiry={handleOpenEnquiry} />
+
+            <OnlineFeatures />
+
+            <Placements />
+
+            {/* <Testimonials /> */}
+
+            <Blog />
+
+            <FAQ />
+
+            <Contact />
+          </>
+        )}
       </main>
 
       <Footer onOpenLegal={handleOpenLegal} />
